@@ -10,14 +10,14 @@ static const char *const usage[] = {
     NULL,
 };
 
-ping_opts opts = { 30, 32 };
+ping_opts opts = { 30, 32, 1000 };
 
 
 struct argparse_option options[] = {
     OPT_HELP(),
     OPT_GROUP("Basic Options"),
     OPT_INTEGER('T', "ttl", &opts.ttl, "Time To Live"),
-    OPT_INTEGER('s', "size", &opts.size, "Size of data to send"),
+    OPT_INTEGER('I', "ms", &opts.sleep_time, "Sleep time in ms"),
     OPT_END()
 };
 

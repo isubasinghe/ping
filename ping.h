@@ -13,19 +13,27 @@
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h> 
 #include <time.h> 
-#include <fcntl.h> 
-#include <signal.h> 
+#include <signal.h>
 
 #define RECV_TIMEOUT 1
 #define PORT_NO 0  
-#define PING_SLEEP_RATE 1000000
+#define PACKET_SIZE 64
+
+
+typedef struct {
+    struct icmphdr hdr;
+    char msg[PACKET_SIZE-sizeof(struct icmphdr)];
+} ping_pkt;
 
 typedef struct {
     int ttl;
     int size;
+    unsigned int sleep_time;
 } ping_opts;
 
-int get_ipv4_addr(const char *hostname, char *ip);
+unsigned short checksum(void *b, int len);
+
+int get_ipv4_addr(const char *hostname, char *ip, struct sockaddr_in *con);
 
 int ping(const char *hostname, ping_opts *opts);
 
